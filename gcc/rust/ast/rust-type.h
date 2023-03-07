@@ -385,6 +385,9 @@ public:
   // Returns whether the tuple type is the unit type, i.e. has no elements.
   bool is_unit_type () const { return elems.empty (); }
 
+  // unit type constructor
+  TupleType (Location locus) : locus (locus) {}
+
   TupleType (std::vector<std::unique_ptr<Type> > elems, Location locus)
     : elems (std::move (elems)), locus (locus)
   {}

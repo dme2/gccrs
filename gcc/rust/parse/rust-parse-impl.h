@@ -2834,6 +2834,9 @@ Parser<ManagedTokenSource>::parse_function (AST::Visibility vis,
   // parse function return type - if exists
   std::unique_ptr<AST::Type> return_type = parse_function_return_type ();
 
+  if (return_type == nullptr)
+    return_type = std::unique_ptr<AST::TupleType> (new AST::TupleType (locus));
+
   // parse where clause - if exists
   AST::WhereClause where_clause = parse_where_clause ();
 
@@ -9912,6 +9915,9 @@ Parser<ManagedTokenSource>::parse_bare_function_type (
 	  return nullptr;
 	}
     }
+  else
+    return_type = std::unique_ptr<AST::TupleType> (
+      new AST::TupleType (lexer.peek_token ()->get_locus ()));
 
   return std::unique_ptr<AST::BareFunctionType> (
     new AST::BareFunctionType (std::move (for_lifetimes),
