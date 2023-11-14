@@ -1,6 +1,5 @@
-// Copyright (C) 2020-2023 Free Software Foundation, Inc.
-
-// This file is part of GCC.
+// Copyright (C) 2020-2023 Free Software Foundation, Inc. // This file is part
+// of GCC.
 
 // GCC is free software; you can redistribute it and/or modify it under
 // the terms of the GNU General Public License as published by the Free
@@ -450,11 +449,9 @@ TypeCheckExpr::resolve_segments (NodeId root_resolved_node_id,
 	    }
 	}
 
-      if (tyseg->needs_generic_substitutions ())
-	{
-	  if (!prev_segment->needs_generic_substitutions ())
-	    {
-	      auto used_args_in_prev_segment
+        if (tyseg->needs_generic_substitutions() && !(seg.has_generic_args())) {
+            if (!prev_segment->needs_generic_substitutions()) {
+              auto used_args_in_prev_segment
 		= GetUsedSubstArgs::From (prev_segment);
 
 	      if (!used_args_in_prev_segment.is_error ())
@@ -466,9 +463,8 @@ TypeCheckExpr::resolve_segments (NodeId root_resolved_node_id,
 			tyseg, used_args_in_prev_segment);
 		    }
 		}
-	    }
-	}
-
+            }
+        }
       if (seg.has_generic_args ())
 	{
 	  tyseg = SubstMapper::Resolve (tyseg, expr_locus,
